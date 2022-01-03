@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="navbar">
+       <div><h2 class="a">FOODIES HERE</h2></div> 
+        <a   href=""><button class="b" >Login</button></a>
+        <a href=""><button class ="c" >Sign Up</button></a>
+    </div>
+    <input oninput="getfood()" type="text" placeholder="enter food" id="enter">
+
+    </div>
+    <div id="banao">
+
+        <div id="food"></div>
+    </div>
+    
+</body>
+</html>
+<script>
+ let ghe_data =document.getElementById("food")
+    async function getfood()
+    {
+        let name = document.getElementById("enter").value
+       try{
+        let responce = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
+        let foodsdata = await responce.json();
+        let main = foodsdata.meals;
+        console.log(main)
+        getmeal(main);
+       }
+       catch(err)
+       {
+           console.log("this error may be due to spelling mistake",err)
+       }   
+
+    }
+    function getmeal(main)
+    {
+        main.forEach(function(elem)
+        {
+
+            let img = document.createElement("img");
+        img.src = elem.strMealThumb;
+        let name =document.createElement("p");
+        name.innerText= elem.strIngredient1;
+        let price =document.createElement("p");
+        price.innerText="50$";
+        let butt = document.createElement("button");
+        butt.innerHTML= "add to cart"
+        butt.style.backgroundColor="blue";
+        butt.style.color="white"
+
+        ghe_data.append(img,name,price,butt)
+        })
+        
+
+    }
+
+
+
+</script>
